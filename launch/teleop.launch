@@ -1,0 +1,11 @@
+<launch>
+
+    <node name="rosserial_python" pkg="rosserial_python" type="serial_node.py">
+        <param name="port" value="/dev/ttyACM0" />
+        <param name="baud" value="57600" />
+    </node>
+    <node name="teleop" pkg="av_atras" type="teleop.py"> </node>
+    <node name="car_hardware_interface" pkg="av_atras" type="car_hardware_interface.py"> </node>
+	
+
+</launch>

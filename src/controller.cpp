@@ -96,7 +96,7 @@ L1Controller::L1Controller()
     pn.param("baseAngle", baseAngle, 90.0);
 
     //Publishers and Subscribers
-    odom_sub = n_.subscribe("/odometry/filtered", 1, &L1Controller::odomCB, this);
+    odom_sub = n_.subscribe("/odometry_lulus", 1, &L1Controller::odomCB, this);
     path_sub = n_.subscribe("/move_base/GlobalPlanner/plan", 1, &L1Controller::pathCB, this);
     goal_sub = n_.subscribe("/move_base_simple/goal", 1, &L1Controller::goalCB, this);
     marker_pub = n_.advertise<visualization_msgs::Marker>("car_path", 10);
@@ -391,9 +391,9 @@ void L1Controller::controlLoopCB(const ros::TimerEvent&)
             /*Estimate Gas Input*/
             if(!goal_reached)
             {
-                //double u = getGasInput(carVel.linear.x);
-                //cmd_vel.linear.x = baseSpeed - u;
-                cmd_vel.linear.x = baseSpeed;
+                double u = getGasInput(carVel.linear.x);
+                cmd_vel.linear.x = baseSpeed - u;
+                //cmd_vel.linear.x = baseSpeed;
                 ROS_INFO("\nGas = %.2f\nSteering angle = %.2f",cmd_vel.linear.x,cmd_vel.angular.z);
             }
         }

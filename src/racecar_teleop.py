@@ -124,8 +124,8 @@ if __name__=="__main__":
                     	control_turn = moveBackBindings[key][1]*30 + turn_mid + turn_bias
                 count = 0
             elif key == ' ' or key == 'k' :
-                control_speed = speed_mid + speed_bias
-                control_turn = turn_mid + turn_bias
+                control_speed = 1500
+                control_turn = 90
             elif key == 'w' :
                 speed_bias = speed_bias - 5
                 control_speed = control_speed - 5

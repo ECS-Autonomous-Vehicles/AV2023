@@ -7,8 +7,27 @@ import rospy
 import numpy as np
 from sensor_msgs.msg import Imu
 from tf.transformations import quaternion_about_axis
-from mpu_6050_driver.registers import PWR_MGMT_1, ACCEL_XOUT_H, ACCEL_YOUT_H, ACCEL_ZOUT_H,\
-    GYRO_XOUT_H, GYRO_YOUT_H, GYRO_ZOUT_H
+
+PWR_MGMT_1 = 0x6b
+
+ACCEL_CONFIG = 0x1C
+ACCEL_XOUT_H = 0x3B
+ACCEL_XOUT_L = 0x3C
+ACCEL_YOUT_H = 0x3D
+ACCEL_YOUT_L = 0x3E
+ACCEL_ZOUT_H = 0x3F
+ACCEL_ZOUT_L = 0x40
+
+GYRO_CONFIG = 0x1B
+GYRO_XOUT_H = 0x43
+GYRO_XOUT_L = 0x44
+GYRO_YOUT_H = 0x45
+GYRO_YOUT_L = 0x46
+GYRO_ZOUT_H = 0x47
+GYRO_ZOUT_L = 0x48
+
+TEMP_H = 0x41
+TEMP_L = 0x42
 
 ADDR = None
 bus = None
@@ -39,12 +58,12 @@ def publish_imu(timer_event):
     accel_z = read_word_2c(ACCEL_ZOUT_H) / 16384.0
     
     # Calculate a quaternion representing the orientation
-    '''accel = accel_x, accel_y, accel_z
+    accel = accel_x, accel_y, accel_z
     ref = np.array([0, 0, 1])
     acceln = accel / np.linalg.norm(accel)
     axis = np.cross(acceln, ref)
     angle = np.arccos(np.dot(acceln, ref))
-    orientation = quaternion_about_axis(angle, axis)'''
+    orientation = quaternion_about_axis(angle, axis)
 
     # Read the gyro vals
     gyro_x = read_word_2c(GYRO_XOUT_H) / 131.0
@@ -52,8 +71,8 @@ def publish_imu(timer_event):
     gyro_z = read_word_2c(GYRO_ZOUT_H) / 131.0
     
     # Load up the IMU message
-    '''o = imu_msg.orientation
-    o.x, o.y, o.z, o.w = orientation'''
+    o = imu_msg.orientation
+    o.x, o.y, o.z, o.w = orientation
 
     imu_msg.linear_acceleration.x = accel_x*9.8
     imu_msg.linear_acceleration.y = accel_y*9.8

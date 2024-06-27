@@ -1,0 +1,8 @@
+prefix=/home/norris/av23/catkin_ws/src/AV2023/build/devel
+
+Name: auto_car
+Description: Description of auto_car
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
